@@ -9,7 +9,7 @@ import com.carwash.entity.ClienteEntity;
 public interface ClienteRepository extends JpaRepository<ClienteEntity, Long> {
 	
 	
-	ClienteEntity findByCorreoAndPassword(String user, String password);
+	ClienteEntity findByCorreoAndPassword(String correo, String password);
 	
 	
 

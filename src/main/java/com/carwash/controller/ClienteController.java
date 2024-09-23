@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.carwash.dto.ClienteDTO;
+import com.carwash.dto.LoginDTO;
 import com.carwash.service.ClienteService;
 
 import lombok.RequiredArgsConstructor;
@@ -28,19 +29,23 @@ public class ClienteController {
  
 	
 	@PostMapping("/login")
-	public ResponseEntity<ClienteDTO> login(@RequestBody ClienteDTO clienteDTO) {
+	public ResponseEntity<LoginDTO> login(@RequestBody ClienteDTO clienteDTO) {
 		try {
-			Optional<ClienteDTO> clienteDTOResult = clienteService.findByCorreoAndPassword(clienteDTO.getCorreo(), clienteDTO.getPassword());
+			Optional<LoginDTO> clienteDTOResult = clienteService.findByCorreoAndPassword(clienteDTO.getCorreo(), 
+																							clienteDTO.getPassword());
 			if (isNull(clienteDTOResult)) {
 				return ResponseEntity.badRequest().build();
 			}		 
 			return ResponseEntity.ok().body(clienteDTOResult.get());
 		} catch (Exception e) {
-			return ResponseEntity.internalServerError().build();
+			 
+		 
+			
+			return ResponseEntity.badRequest().build();
 		}
 	}
 	
-	@PostMapping
+	@PostMapping("/save")
 	public ResponseEntity<?> save(@RequestBody ClienteDTO clienteDTO) {
 		try {
 			Long id = clienteService.save(clienteDTO);
